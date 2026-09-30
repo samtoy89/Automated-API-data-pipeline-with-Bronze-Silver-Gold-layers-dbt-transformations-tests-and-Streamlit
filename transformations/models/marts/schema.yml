@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: fct_latest_prices
+    description: "Deduplicated fact table showing the latest price tick per cryptocurrency"
+    columns:
+      - name: ticker
+        tests:
+          - unique
+          - not_null
+      - name: price_usd
+        tests:
+          - not_null

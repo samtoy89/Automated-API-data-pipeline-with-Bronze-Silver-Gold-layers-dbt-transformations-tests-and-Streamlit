@@ -1,0 +1,7 @@
+requests>=2.32
+pandas>=2.2
+duckdb>=1.1
+dbt-core>=1.9
+dbt-duckdb>=1.9
+streamlit>=1.50
+plotly>=6.0
