@@ -7,16 +7,16 @@ An end-to-end data pipeline that pulls live cryptocurrency prices from the CoinG
 ## Architecture
 
 ```mermaid
-flowchart LR
-    A["CoinGecko API<br/>/coins/markets"] -->|"HTTP GET every 60s"| B["ingest_api.py<br/>Python ingestion"]
-    B -->|"append"| C[("Bronze<br/>bronze_raw_crypto_prices")]
-    C -->|"dbt view"| D["Silver<br/>stg_crypto_prices"]
-    D -->|"dbt table"| E["Gold<br/>fct_latest_prices"]
-    E --> F["app.py<br/>Streamlit dashboard"]
+graph LR
+    A[CoinGecko API] -->|every 60s| B[ingest_api.py]
+    B -->|append| C[(Bronze: bronze_raw_crypto_prices)]
+    C -->|dbt view| D[Silver: stg_crypto_prices]
+    D -->|dbt table| E[Gold: fct_latest_prices]
+    E --> F[app.py Streamlit dashboard]
     D --> F
-    C -.->|"pipeline health"| F
-    O{{"orchestrator.py"}} -.->|"1. ingest"| B
-    O -.->|"2. dbt run + dbt test"| D
+    C --> F
+    O[orchestrator.py] -.-> B
+    O -.-> D
 ```
 
 | Step | Component | What it does |
